@@ -19,8 +19,6 @@ const TodoForm = ({ onSubmit, existingTodo, onCancel }) => {
 
   const handleSubmit = () => {
     const newTodo = { title, details, dueDate };
-
-    console.log(existingTodo)
     if (existingTodo) {
       onSubmit({ ...newTodo, id: existingTodo.id });
     } else {
