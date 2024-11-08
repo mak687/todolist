@@ -8,6 +8,8 @@ const TodoForm = ({ onSubmit, existingTodo, onCancel }) => {
   const [dueDate, setDueDate] = useState(
     existingTodo ? existingTodo.dueDate : ''
   );
+  
+  const [errMessage, seterrMessage] = useState('');
 
   useEffect(() => {
     if (existingTodo) {
@@ -18,6 +20,12 @@ const TodoForm = ({ onSubmit, existingTodo, onCancel }) => {
   }, [existingTodo]);
 
   const handleSubmit = () => {
+
+    if(title.length < 1 ||  details.length < 1 ) {
+        seterrMessage('Title & Detail of Todo list required.') 
+        return true;
+    }
+    
     const newTodo = { title, details, dueDate };
     if (existingTodo) {
       onSubmit({ ...newTodo, id: existingTodo.id });
@@ -27,6 +35,8 @@ const TodoForm = ({ onSubmit, existingTodo, onCancel }) => {
     setTitle('');
     setDetails('');
     setDueDate('');
+    seterrMessage('')
+   
   };
 
   return (
@@ -62,6 +72,7 @@ const TodoForm = ({ onSubmit, existingTodo, onCancel }) => {
         <button type='button' onClick={onCancel}>
             Cancel
         </button>
+        <p className="error-region">{errMessage}</p>
       </>
   );
 };
